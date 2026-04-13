@@ -1,48 +1,57 @@
 import { transactionsMock } from "../../services/transactions.mock";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@/components/ui/table";
 
 export default function TransactionListPage() {
+
   return (
     <div className="w-full max-w-2xl mx-auto p-4 flex flex-col gap-4">
-      <search>
+      <search className="w-full flex gap-2">
         <input
           type="text"
           placeholder="Busque uma transação"
-          className="w-full bg-[#121214] text-[#7C7C8A] h-10 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
+          className="w-full bg-[#121214] text-[#7C7C8A] h-10 border-gray-300 rounded-md  px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
         />
-        <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800 focus:outline-none">
-          <svg></svg>
-          
+        <button className="text-[#00B37E] border-[#00B37E] border-2 rounded-md focus:outline-none">
+          <span className="sr-only">Buscar</span>
+         Buscar
         </button>
       </search>
 
-      {transactionsMock.map((transaction) => (
-        <div
-          key={transaction.id}
-          className=" bg-[#29292E] h-14 w-full shadow-md rounded-lg items-center flex justify-between"
-        >
-          <div className="flex flex-row gap-4 items-center justify-between w-full">
-            <h1 className="text-lg font-normal text-white">
-              {transaction.description}
-            </h1>
-            <span
-              className={`font-bold ${
-                transaction.amount > 0 ? "text-green-500" : "text-red-500"
-              }`}
+      <Table className="border-separate border-spacing-y-2">
+        <TableBody>
+          {transactionsMock.map((transaction) => (
+            <TableRow
+              key={transaction.id}
+              className="bg-[#29292E] h-14 border-none hover:bg-[#29292E]/80 [&>td:first-child]:rounded-l-[5px] [&>td:last-child]:rounded-r-[5px]"
             >
-              {transaction.amount > 0 ? "" : "- "}R${" "}
-              {Math.abs(transaction.amount).toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-              })}
-            </span>
-            <h1 className="text-lg font-normal text-white">
-              {transaction.type}
-            </h1>
-            <h1 className="text-sm font-normal text-gray-400">
-              {transaction.date}
-            </h1>
-          </div>
-        </div>
-      ))}
+              <TableCell className="text-lg font-normal text-white">
+                {transaction.description}
+              </TableCell>
+              <TableCell
+                className={`font-bold ${
+                  transaction.amount > 0 ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {transaction.amount > 0 ? "" : "- "}R${" "}
+                {Math.abs(transaction.amount).toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                })}
+              </TableCell>
+              <TableCell className="text-lg font-normal text-white">
+                {transaction.type}
+              </TableCell>
+              <TableCell className="text-sm font-normal text-gray-400">
+                {transaction.date}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }   

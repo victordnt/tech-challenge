@@ -37,68 +37,88 @@ export const AddTransactionForm = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white shadow-md rounded-2xl p-6 w-full max-w-md mx-auto flex flex-col gap-4"
+      className="w-full flex flex-col gap-3"
     >
-      <h2 className="text-xl font-semibold text-gray-800">Nova transação</h2>
+      <h2 className="text-2xl font-bold text-white mb-2">Nova transação</h2>
 
       {/* Descrição */}
-      <div className="flex flex-col gap-1">
-        <label className="text-sm text-gray-600">Descrição</label>
-        <input
-          type="text"
-          value={newTransaction.description}
-          onChange={(e) =>
-            setNewTransaction({
-              ...newTransaction,
-              description: e.target.value,
-            })
-          }
-          className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Ex: Mercado"
-        />
-      </div>
+      <input
+        type="text"
+        value={newTransaction.description}
+        onChange={(e) =>
+          setNewTransaction({
+            ...newTransaction,
+            description: e.target.value,
+          })
+        }
+        className="rounded-md px-4 py-4 bg-[#121214] text-white placeholder-[#7C7C8A] border-none focus:outline-none focus:ring-2 focus:ring-[#00875F]"
+        placeholder="Descrição"
+      />
 
-      {/* Valor */}
-      <div className="flex flex-col gap-1">
-        <label className="text-sm text-gray-600">Valor</label>
-        <input
-          type="number"
-          value={newTransaction.amount}
-          onChange={(e) =>
-            setNewTransaction({
-              ...newTransaction,
-              amount: Number(e.target.value),
-            })
-          }
-          className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="0.00"
-        />
-      </div>
+      {/* Preço */}
+      <input
+        type="number"
+        value={newTransaction.amount || ""}
+        onChange={(e) =>
+          setNewTransaction({
+            ...newTransaction,
+            amount: Number(e.target.value),
+          })
+        }
+        className="rounded-md px-4 py-4 bg-[#121214] text-white placeholder-[#7C7C8A] border-none focus:outline-none focus:ring-2 focus:ring-[#00875F]"
+        placeholder="Preço"
+      />
 
-      {/* Tipo */}
-      <div className="flex flex-col gap-1">
-        <label className="text-sm text-gray-600">Tipo</label>
-        <select
-          value={newTransaction.type}
-          onChange={(e) =>
-            setNewTransaction({
-              ...newTransaction,
-              type: e.target.value as "credito" | "debito",
-            })
+      {/* Categoria */}
+      <input
+        type="text"
+        value={newTransaction.type === "credito" || newTransaction.type === "debito" ? "" : newTransaction.type}
+        onChange={(e) =>
+          setNewTransaction({
+            ...newTransaction,
+            type: e.target.value,
+          })
+        }
+        className="rounded-md px-4 py-4 bg-[#121214] text-white placeholder-[#7C7C8A] border-none focus:outline-none focus:ring-2 focus:ring-[#00875F]"
+        placeholder="Categoria"
+      />
+
+      {/* Tipo - Entrada/Saída */}
+      <div className="flex gap-4 mt-2">
+        <button
+          type="button"
+          onClick={() =>
+            setNewTransaction({ ...newTransaction, type: "credito" })
           }
-          className="border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-md font-medium transition ${
+            newTransaction.type === "credito"
+              ? "bg-[#00875F]/20 border border-[#00875F] text-white"
+              : "bg-[#29292E] text-[#C4C4CC] hover:bg-[#323238]"
+          }`}
         >
-          <option value="credito">Crédito</option>
-          <option value="debito">Débito</option>
-        </select>
+          <span className="text-green-500">↑</span> Entrada
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            setNewTransaction({ ...newTransaction, type: "debito" })
+          }
+          className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-md font-medium transition ${
+            newTransaction.type === "debito"
+              ? "bg-red-500/20 border border-red-500 text-white"
+              : "bg-[#29292E] text-[#C4C4CC] hover:bg-[#323238]"
+          }`}
+        >
+          <span className="text-red-500">↓</span> Saída
+        </button>
       </div>
 
-      {/* Botão */}
+      {/* Botão Cadastrar */}
       <button
         type="submit"
-        className="mt-2 bg-blue-500 text-white py-2 rounded-lg font-medium hover:bg-blue-600 transition"
+        className="mt-4 bg-[#00875F] text-white py-4 rounded-md font-bold text-base hover:bg-emerald-600 transition"
       >
-        Adicionar
+        Cadastrar
       </button>
     </form>
   );

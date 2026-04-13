@@ -8,7 +8,6 @@ import { AddTransactionForm } from "./components/AddTransactionForm";
 import { TransactionList } from "./components/TransactionList";
 import { AccountBalance } from "./components/AccountBalance";
 import { ITransaction } from "./types/transaction";
-import TransactionCreateModal from "./features/transactions/components/transactionListPage";
 import TransactionListPage from "./features/transactions/components/transactionListPage";
 
 export default function Home() {
